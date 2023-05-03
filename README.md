@@ -36,3 +36,31 @@ Gave up here.
 ### Dual boot on Dell XPS 13 9360 (worked) - Win10 Pro & ubuntu 18.04
 everything is same as above.
 
+### Install software on host computer:
+This software is developed to run under Linux with Ubuntu 16.04 and ROS Kinetic. 
+Installation steps are:
+1. Unpack the htp_teleop.zip file into the source folder of a catkin workspace
+2. Install dependencies:
+    1. sudo apt-get install ros-kinetic-gazebo-ros-control
+    2. sudo apt-get install ros-kinetic-joint-state-controller
+    3. sudo apt-get install ros-kinetic-hector-gazebo-plugins
+    4. sudo apt-get install ros-kinetic-hector-gazebo
+    5. sudo apt-get install python-pygame
+    6. sudo pip3 install -U scikit-fuzzy
+3. Build all new ROS parts
+    1. catkin_make
+4. Set up the model path:
+    1. export GAZEBO_MODEL_PATH=~/.gazebo/models:$GAZEBO_MODEL_PATH
+### Run simulated environment on host:
+1. Start the simulation
+    1. roslaunch am_gazebo am_gazebo_hrp.launch gui:=true
+2. launch different running nodes separately:
+    1. source ~/catkin_ws/devel/setup.bash
+    2. rosrun am_driver hrp_teleop_or_auto.py for mode 0 and 2
+    3. rosrun am_driver teleop_or_slowdown.py for mode 0 and 3
+    4. rosrun am_driver shared_control_slowdown.py for mode 5
+    5. rosrun am_driver bumper_teleop.py for mode 1
+    6. rosrun am_driver fuzzy_logic.py for mode  for mode 0,4,6,7
+3. launch the interface:
+    1. go to the directory and run python interface.py
+
